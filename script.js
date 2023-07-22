@@ -25,7 +25,6 @@ const displayScore = function (score) {
 // implementing the game logic
 document.querySelector(".check").addEventListener("click", function () {
   const guess = Number(document.querySelector(".guess").value);
-  console.log(guess, typeof guess);
 
   // when there is no input
   if (!guess) {
@@ -62,7 +61,6 @@ document.querySelector(".check").addEventListener("click", function () {
 // Reset
 document.querySelector(".again").addEventListener("click", function () {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
-  console.log(secretNumber);
   displayMessage("Start guessing...");
   displayScore("20");
   score = 20;
