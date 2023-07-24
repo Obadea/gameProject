@@ -5,29 +5,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="style.css" />
-    <title>Guess My Number!</title>
+    <title>Pig Game</title>
   </head>
   <body>
     <header>
-      <h1>Guess My Number!</h1>
-      <p class="between">(Between 1 and 20)</p>
-      <button class="btn again">Again!</button>
-      <div class="number">?</div>
+      <!-- Target -->
+      <div>
+        <p>Target: <span class="domTarget">100</span></p>
+      </div>
+      <!-- Rules icon -->
+      <svg
+        class="rules"
+        xmlns="http://www.w3.org/2000/svg"
+        height="4em"
+        viewBox="0 0 512 512"
+      >
+        <path
+          d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24V264c0 13.3-10.7 24-24 24s-24-10.7-24-24V152c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"
+        />
+        <p class="hidden rulesTitle">Rules</p>
+      </svg>
+
+      <svg
+        class="settings"
+        xmlns="http://www.w3.org/2000/svg"
+        height="4em"
+        viewBox="0 0 512 512"
+      >
+        <path
+          d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160z"
+        />
+        <p class="hidden settingTitle">Setting</p>
+      </svg>
     </header>
     <main>
-      <section class="left">
-        <input type="number" class="guess" />
-        <button class="btn check">Check!</button>
+      <section class="player player--0 player--active">
+        <h2 class="name" id="name--0">Player 1</h2>
+        <p class="score" id="score--0">0</p>
+        <div class="current">
+          <p class="current-label">Current</p>
+          <p class="current-score" id="current--0">0</p>
+        </div>
       </section>
-      <section class="right">
-        <p class="message">Start guessing...</p>
-        <p class="label-score">💯 Score: <span class="score">20</span></p>
-        <p class="label-highscore">
-          🥇 Highscore: <span class="highscore">0</span>
-        </p>
+      <section class="player player--1">
+        <h2 class="name" id="name--1">Player 2</h2>
+        <p class="score" id="score--1">0</p>
+        <div class="current">
+          <p class="current-label">Current</p>
+          <p class="current-score" id="current--1">0</p>
+        </div>
       </section>
+
+      <img src="dice-5.png" alt="Playing dice" class="dice" />
+      <button class="btn btn--new">🔄 New game</button>
+      <button class="btn btn--roll">🎲 Roll dice</button>
+      <button class="btn btn--hold">📥 Hold</button>
     </main>
+
+    <!-- overlay -->
+    <div class="hidden overlay"></div>
+    <!-- Rules -->
+    <section class="hidden rulesArticle">
+      <h1>Pig Game</h1>
+      <article>
+        <p class="closeWindow">&times;</p>
+        <p>
+          <b>Number of Players:</b> 2 or more (you can play alone, taking turns
+          as different players)<br />
+
+          <b>Objective:</b> Be the first player to reach a total score of 100 or
+          more points.<br />
+
+          <b>Setup: 1.</b> Each player starts with a total score of 0. <br />
+          <b>2.</b> Decide who goes first (Player 1) through any mutually
+          agreed-upon method.<br />
+
+          <b>Gameplay:</b><br />
+          <b>1.</b> Player 1 begins the game by rolling a six-sided dice.<br />
+          <b>2.</b> After the dice roll, the game generates a random number
+          between 1 and 6 and displays it as the result.<br />
+          <b>3.</b> If the result is 1:<br />
+          a. Player 1's turn ends immediately.<br />
+          b. All points accumulated by Player 1 during this turn are lost.<br />
+          c. The total score remains unchanged.<br />
+          d. The turn passes to the next player.<br />
+          <b>4.</b> If the result is 2 to 6:<br />
+          a. The result is added to Player 1's turn score.<br />
+          b. Player 1 has the option to roll the dice again (go back to step 1)
+          or hold their turn score (proceed to step 5).<br />
+
+          <b>5.</b> If Player 1 decides to hold their turn score:<br />
+          a. The turn score is added to Player 1's total score.<br />
+          b. The total score is updated.<br />
+          c. Player 1's turn ends.<br />
+          d. The turn passes to the next player.<br />
+
+          <b>6.</b> The next player (Player 2) now takes their turn, following
+          the same steps 1 to 5.<br />
+
+          <b>7.</b> Players take turns rolling the dice and accumulating points
+          until one player's total score reaches or exceeds 100 points.<br />
+
+          <b>Winning:</b><br />
+          The first player to reach a total score of 100 or more points wins the
+          game. The game ends immediately, and that player is declared the
+          winner.<br />
+
+          <b>Optional Rule:</b><br />
+          If desired, players can agree on a higher or lower target score (e.g.,
+          200 points) to make the game shorter or longer.<br />
+
+          <b>Note:</b> The Pig Dice Game is a simple and fun game of chance and
+          risk management. Enjoy and have fun playing!<br />
+        </p>
+      </article>
+    </section>
+
+    <!-- Settings -->
+    <section class="hidden setup">
+      <p class="closeWindow2">&times;</p>
+      <h2>Change Target</h2>
+      <label for="target">Target:</label>
+      <input type="number" value="100" id="target" />
+      <button type="submit" class="check">SAVE</button>
+      <!-- notice -->
+      <p class="targetNotice hidden">Note: Pls input number from 2 above 🙂</p>
+    </section>
+
+    <footer>By OBADIAH GBENGA</footer>
     <script src="script.js"></script>
   </body>
-  <a href="https://twitter.com/Obadea0?s=20">By Obadiah</a>
 </html>
+
+<!-- Notification -->
+<div class="notification">
+  <h5 class="notificationMSG">player 1</h5>
+</div>
+
+<!-- display for phone -->
+<div class="phoneDisplay">
+  not available on phone now😅 pls change the screen width to 415px above
+</div>
